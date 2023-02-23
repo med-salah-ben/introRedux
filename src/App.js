@@ -1,23 +1,48 @@
-import logo from './logo.svg';
+import React , {useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {increment , decrement , inputInc} from "./JS/actions/action"
+
 import './App.css';
 
 function App() {
+  //--------useState----------------------
+  // const [count , setCount] =useState(0);
+
+  // const inc = ()=>{
+  //   setCount(count+1)
+  // }
+
+  //----------------React-Redux----------------------
+  const [num , setNum] = useState(0)
+  const count = useSelector((state)=>state.countReducer.count1)
+  const dispatch = useDispatch();
+
+  const dec = ()=>{
+    dispatch(decrement())
+  }
+
+  const incInput = (e)=>{
+    e.preventDefault()
+    dispatch(inputInc(+num))
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+       {/* //--------useState---------------------- */}
+      {/* <button onClick={inc}>+</button>
+      <h3> {count} </h3>
+      <button onClick={()=>setCount(count-1)}>-</button> */}
+
+
+{/* //----------------React-Redux---------------------- */}
+      <form>
+       <input type="number" onChange={(e)=>setNum(e.target.value)} /><button onClick={incInput}>add</button> 
+
+      </form>
+      <button onClick={()=>dispatch(increment())}>+</button>
+      <h3> {count} </h3>
+      <button onClick={dec}>-</button> 
     </div>
   );
 }
